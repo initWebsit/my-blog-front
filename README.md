@@ -1,5 +1,5 @@
-# webTemplate
-web的mobile, pc端模版框架，含：桌面端和移动端。
+# MyBlogFront
+个人博客前端项目，PC端
 
 ## 构建 Start
 

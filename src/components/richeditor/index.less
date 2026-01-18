@@ -1,0 +1,63 @@
+/* stylelint-disable selector-class-pattern */
+.ui-xms-richeditor {
+  border: 1px solid #dfe2e8;
+  border-radius: 4px;
+
+  .ck-editor {
+    .ck-toolbar {
+      background: #fafafb !important;
+      border: none !important;
+      // overflow: hidden !important;
+      border-radius: 4px 4px 0 0 !important;
+
+      .ck-toolbar__items > .ck-button {
+        width: 36px !important;
+        height: 36px !important;
+      }
+    }
+
+    .ck-editor__editable {
+      min-height: 200px !important;
+      border-top: 1px solid #dfe2e8 !important;
+      border-bottom: 1px solid #dfe2e8 !important;
+      border-left: none !important;
+      border-right: none !important;
+    }
+  }
+
+  .footer-view {
+    line-height: 36px;
+    text-align: right;
+    font-weight: 400;
+    font-size: 14px;
+    color: #929aa6;
+  }
+
+  .ql-toolbar.ql-snow {
+    border-top: none !important;
+    border-left: none !important;
+    border-right: none !important;
+  }
+
+  .ql-toolbar.ql-snow + .ql-container.ql-snow {
+    border-left: none !important;
+    border-right: none !important;
+  }
+
+  .editor-view {
+    height: 580px;
+  }
+}
+
+.ck-content {
+  // line-height: 1.5 !important;
+  & > p:empty {
+    &::after {
+      content: ' ';
+    }
+  }
+}
+
+.ql-container {
+  font-size: 16px;
+}
