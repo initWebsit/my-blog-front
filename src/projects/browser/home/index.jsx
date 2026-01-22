@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import BlogList from '@/components/BlogList'
+import Empty from '@/components/Empty'
+import Loading from '@/components/Loading'
 import NextPage from '@/components/NextPage'
 import { getBlogList } from '@/network'
 
@@ -36,34 +38,8 @@ function Home() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pageInfo.page, pageInfo.pageSize])
 
-  if (loading)
-    return (
-      <div className='home-loading'>
-        <div className='home-loading-spinner'></div>
-        <div className='home-loading-text'>加载中...</div>
-      </div>
-    )
-  if (!loading && blogList.length === 0)
-    return (
-      <div className='home-empty'>
-        <svg
-          className='home-empty-icon'
-          viewBox='0 0 24 24'
-          fill='none'
-          xmlns='http://www.w3.org/2000/svg'
-        >
-          <path
-            d='M9 12h6M9 16h6M17 21H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7l5 5v11a2 2 0 0 1-2 2z'
-            stroke='currentColor'
-            strokeWidth='2'
-            strokeLinecap='round'
-            strokeLinejoin='round'
-          />
-        </svg>
-        <div className='home-empty-text'>暂无数据</div>
-        <div className='home-empty-desc'>抱歉，没有找到相关内容</div>
-      </div>
-    )
+  if (loading) return <Loading />
+  if (!loading && blogList.length === 0) return <Empty />
   return (
     <section className='home-container'>
       {blogList.map((item, index) => (

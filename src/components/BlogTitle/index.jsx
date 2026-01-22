@@ -9,6 +9,7 @@ export default function BlogTitle({
   look_number,
   commentCount,
   likeCount,
+  isLiked,
   tags,
   categoryName,
   handleLike = () => {},
@@ -83,7 +84,7 @@ export default function BlogTitle({
           viewBox='0 0 24 24'
           x-show='liked(55)'
           data-icon='mdi:heart'
-          style={{ cursor: 'pointer', color: likeCount > 0 ? 'rgb(185, 28, 28)' : '#bbb' }}
+          style={{ cursor: 'pointer', color: isLiked > 0 ? 'rgb(185, 28, 28)' : '#bbb' }}
         >
           <path
             fill='currentColor'
@@ -92,7 +93,7 @@ export default function BlogTitle({
         </svg>
         <span
           className='blog-title-item-operation-span'
-          style={{ color: likeCount > 0 ? 'rgb(185, 28, 28)' : '#bbb' }}
+          style={{ color: isLiked > 0 ? 'rgb(185, 28, 28)' : '#bbb' }}
         >
           {likeCount}
         </span>

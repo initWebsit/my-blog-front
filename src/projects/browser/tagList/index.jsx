@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 
 import BlogList from '@/components/BlogList'
+import Empty from '@/components/Empty'
+import Loading from '@/components/Loading'
 import NavTop from '@/components/NavTop'
 import NextPage from '@/components/NextPage'
 import { getBlogList } from '@/network'
@@ -47,35 +49,8 @@ function TagList() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pageInfo.page, pageInfo.pageSize, tagId])
 
-  if (loading)
-    return (
-      <div className='tag-list-loading'>
-        <div className='tag-list-loading-spinner'></div>
-        <div className='tag-list-loading-text'>加载中...</div>
-      </div>
-    )
-  if (!loading && blogList.length === 0)
-    return (
-      <div className='tag-list-empty'>
-        <svg
-          className='tag-list-empty-icon'
-          viewBox='0 0 24 24'
-          fill='none'
-          xmlns='http://www.w3.org/2000/svg'
-        >
-          <path
-            d='M9 12h6M9 16h6M17 21H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7l5 5v11a2 2 0 0 1-2 2z'
-            stroke='currentColor'
-            strokeWidth='2'
-            strokeLinecap='round'
-            strokeLinejoin='round'
-          />
-        </svg>
-        <div className='tag-list-empty-text'>暂无数据</div>
-        <div className='tag-list-empty-desc'>抱歉，没有找到相关内容</div>
-      </div>
-    )
-
+  if (loading) return <Loading />
+  if (!loading && blogList.length === 0) return <Empty />
   return (
     <section className='tag-list-container'>
       <NavTop

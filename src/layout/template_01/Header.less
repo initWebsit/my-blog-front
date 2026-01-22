@@ -17,6 +17,8 @@
     justify-content: flex-start;
     flex-grow: 1;
     overflow-x: auto;
+    max-width: calc(100% - 120px);
+    overflow-x: auto;
 
     &::-webkit-scrollbar {
       display: none;
@@ -29,6 +31,7 @@
       color: #000000b3;
       cursor: pointer;
       line-height: 60px;
+      flex-shrink: 0;
 
       &:hover {
         color: rgb(59, 130, 246);

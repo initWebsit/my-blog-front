@@ -6,6 +6,8 @@ import handleError from '@/commons/handleError'
 import store from '@/store'
 import { setUserInfo } from '@/store/app'
 
+const NO_LOGIN_WHITE_LIST = ['/user/getUserInfo']
+
 export default class SXAjax {
   /**
    * 构造函数传入的是自定义的一些配置，
@@ -175,7 +177,7 @@ export default class SXAjax {
             reject(response)
             return Promise.reject(err)
           }
-          if (response.data.code === 401) {
+          if (response.data.code === 401 && !NO_LOGIN_WHITE_LIST.includes(url)) {
             clearAllCookie()
             store.dispatch(setUserInfo({}))
             window.location.replace('/login')

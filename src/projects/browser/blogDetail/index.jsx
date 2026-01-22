@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 
 import BlogTitle from '@/components/BlogTitle'
+import Comments from '@/components/Comments'
 import PreNextBlog from '@/components/PreNextBlog'
 import { getBlogDetail, likeBlog } from '@/network'
 
@@ -25,7 +26,7 @@ function BlogDetail() {
     if (!res?.data) return
     setBlogDetail(res.data)
     setTimeout(() => {
-      document.getElementsByClassName('layout-d-content')[0].scrollTop = 0
+      document.getElementsByClassName('layout-d-frame-main-content')[0].scrollTop = 0
     }, 100)
   }
 
@@ -40,11 +41,11 @@ function BlogDetail() {
   }
 
   const handleCategoryClick = () => {
-    navigate(`/tagList?tagId=${blogDetail.category_id}`)
+    navigate(`/tagList?categoryId=${blogDetail.category}&categoryName=${blogDetail.category_name}`)
   }
 
-  const handleTagClick = tagId => {
-    navigate(`/tagList?tagId=${tagId}`)
+  const handleTagClick = (tagId, tagName) => {
+    navigate(`/tagList?tagId=${tagId}&tagName=${tagName}`)
   }
 
   const handlePre = () => {
@@ -96,6 +97,7 @@ function BlogDetail() {
         look_number={blogDetail.look_number}
         commentCount={blogDetail.commentCount}
         likeCount={blogDetail.likeCount}
+        isLiked={blogDetail.isLiked}
         tags={blogDetail.tags}
         categoryName={blogDetail.category_name}
         handleLike={handleLike}
@@ -113,6 +115,7 @@ function BlogDetail() {
         onPre={handlePre}
         onNext={handleNext}
       />
+      <Comments blogId={id} blogCreateUserId={blogDetail.create_person} />
     </div>
   )
 }

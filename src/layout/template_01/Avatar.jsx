@@ -1,8 +1,11 @@
 import React from 'react'
+import { useSelector } from 'react-redux'
 
 import './Avatar.less'
 
 function Avatar() {
+  const { userInfo } = useSelector(state => state.app)
+
   return (
     <div className='avatar-content'>
       <div className='avatar-content-avatar'>
@@ -12,9 +15,9 @@ function Avatar() {
           className='avatar-content-avatar-img'
         />
       </div>
-      <div className='avatar-content-name'>Niu Niu</div>
+      <div className='avatar-content-name'>{userInfo?.nickname || 'Niu Niu'}</div>
       <div className='avatar-content-contact'>
-        <a target='_blank' href='http://www.huih110.com/index.html' title='RSS'>
+        <a target='_blank' href='/index.html' title='RSS'>
           <svg
             aria-hidden='true'
             role='img'
@@ -29,7 +32,7 @@ function Avatar() {
             ></path>
           </svg>
         </a>
-        <a target='_blank' href='mailto:695750870@qq.com' title='Email'>
+        <a target='_blank' href={`mailto:${userInfo?.email || '695750870@qq.com'}`} title='Email'>
           <svg
             aria-hidden='true'
             role='img'

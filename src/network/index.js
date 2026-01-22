@@ -10,7 +10,7 @@ export const login = params => post('/user/login', params)
 export const register = params => post('/user/register', params)
 
 // 获取用户信息
-export const getUserInfo = () => get('/user/getUserInfo')
+export const getUserInfo = () => get('/user/getUserInfo', {}, { closeErrorTip: true })
 
 // 发布博客
 export const publishBlog = params => post('/blog/addBlog', params)
@@ -26,3 +26,9 @@ export const getTags = params => post('/blog/getTags', params)
 
 // 喜欢博客
 export const likeBlog = params => post('/blog/likeBlog', params)
+
+// 获取博客评论
+export const getBlogComments = params => get('/blog/getComments', params)
+
+// 发布博客评论
+export const publishBlogComment = params => post('/blog/addComment', params)
