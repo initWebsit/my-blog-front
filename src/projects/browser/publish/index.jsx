@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-import RichEditor from '@/components/richEditor'
+import RichEditor from '@/components/richeditor'
 import { Picker, Toast } from '@/library/ui'
 import { getTags, publishBlog } from '@/network'
 
