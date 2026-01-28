@@ -1,6 +1,8 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 
+import AvatarIcon from '@/assets/avatar.png'
+
 import './Avatar.less'
 
 function Avatar() {
@@ -10,7 +12,7 @@ function Avatar() {
     <div className='avatar-content'>
       <div className='avatar-content-avatar'>
         <img
-          src='https://i.ibb.co/qMr6ptmD/2026-01-14-160838-393.jpg'
+          src={AvatarIcon}
           alt='avatar'
           className='avatar-content-avatar-img'
         />

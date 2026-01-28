@@ -32,3 +32,6 @@ export const getBlogComments = params => get('/blog/getComments', params)
 
 // 发布博客评论
 export const publishBlogComment = params => post('/blog/addComment', params)
+
+// 上传图片
+export const uploadImage = (params, options) => post('/blog/uploadImage', params, options)

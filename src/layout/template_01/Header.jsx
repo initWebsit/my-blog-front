@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 
+import AvatarIcon from '@/assets/avatar.png'
 import BlogList from '@/components/BlogList'
 import SearchModal from '@/components/SearchModal'
 import { Toast } from '@/library/ui'
@@ -92,7 +93,7 @@ function Header() {
         </div>
         <div className='header-right-avatar'>
           <img
-            src='https://i.ibb.co/qMr6ptmD/2026-01-14-160838-393.jpg'
+            src={AvatarIcon}
             alt='avatar'
             className='header-right-avatar-img'
           />

@@ -3,7 +3,7 @@ let setConsole = async function () {}
 if (process.env.NODE_ENV === 'development') {
 	setConsole = async function setConsole() {
 		// 在本地开发环境时不需要vconsole
-		if (window.location.hostname === 'localhost') return
+		if (['localhost', '127.0.0.1'].includes(window.location.hostname)) return
 
 		// 在生产环境且无需vconsole时,覆盖console.log方法
 		if (!window.location.search.includes('console')) {

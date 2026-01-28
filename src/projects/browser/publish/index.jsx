@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 
 import RichEditor from '@/components/richeditor'
 import { Picker, Toast } from '@/library/ui'
-import { getTags, publishBlog } from '@/network'
+import { getTags, publishBlog, uploadImage } from '@/network'
 
 import './index.less'
 
@@ -70,6 +70,17 @@ function Publish() {
     setTimeout(() => {
       navigate('/home')
     }, 1000)
+  }
+
+  const onUploadImage = async (file) => {
+    const formData = new FormData()
+    formData.append('file', file)
+    const res = await uploadImage(formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    })
+    return res?.data?.url
   }
 
   useEffect(() => {
@@ -142,7 +153,11 @@ function Publish() {
         {/* 富文本编辑器 */}
         <div className='form-group'>
           <label className='form-label'>内容</label>
-          <RichEditor ref={editorRef} content='' />
+          <RichEditor 
+            ref={editorRef}  
+            content='' 
+            onUploadImage={onUploadImage}
+          />
         </div>
 
         {/* 确认按钮 */}

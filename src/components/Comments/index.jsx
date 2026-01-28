@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import moment from 'moment'
 
+import CommentIcon from '@/assets/comment.png'
 import Empty from '@/components/Empty'
 import Loading from '@/components/Loading'
 import { Toast } from '@/library/ui'
@@ -101,7 +102,7 @@ const CommentItem = ({
           className={`comments-list-item-main-img ${
             small ? 'comments-list-item-main-img-small' : ''
           }`}
-          src='https://i.ibb.co/G4DKw4Rs/image.jpg'
+          src={CommentIcon}
         />
         <div className='comments-list-item-main-right'>
           <div className='comments-list-item-main-right-top'>

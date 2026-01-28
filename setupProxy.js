@@ -7,7 +7,7 @@ module.exports = function (app) {
 	app.use(
 		createProxyMiddleware(['/proxyApi'], {
 			// target: 'https://api.partystar.live',
-			target: 'http://47.96.23.201',
+			target: 'http://39.105.22.168',
 			pathRewrite: {
 				'^/proxyApi': '', // 如果后端接口无前缀，可以通过这种方式去掉
 			},
@@ -21,7 +21,7 @@ module.exports = function (app) {
 	app.use(
 		createProxyMiddleware(['/proxyClient'], {
 			// target: 'https://api.partystar.live',
-			target: 'http://47.96.23.201',
+			target: 'http://39.105.22.168',
 			pathRewrite: {
 				'^/proxyClient': '',
 			},
@@ -36,7 +36,7 @@ module.exports = function (app) {
 		createProxyMiddleware(['/proxyHelp'], {
 			// target: 'https://help.partystar.live',
 			// target: 'http://ps-help.imee.com',
-			target: 'http://120.26.70.43/ps',
+			target: 'http://39.105.22.168',
 			pathRewrite: {
 				'^/proxyHelp': '',
 			},
