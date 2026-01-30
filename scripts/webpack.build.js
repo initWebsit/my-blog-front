@@ -22,7 +22,7 @@ const genProjectConfig = (project, environment, buildDir) => ({
   output: {
     path: path.resolve(__dirname, `../${buildDir}/${project}-${environment}`),
     publicPath: '/static/',
-    clean: true,
+    clean: false,
     filename: 'js/[name].js?v=[chunkhash:8]',
     chunkFilename: 'js/[name].js?v=[chunkhash:8]',
   },
