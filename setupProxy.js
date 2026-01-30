@@ -1,13 +1,15 @@
 /**
  * 前端web服务代理配置
  */
+// eslint-disable-next-line import/no-commonjs
 const { createProxyMiddleware } = require('http-proxy-middleware')
 
 module.exports = function (app) {
 	app.use(
 		createProxyMiddleware(['/proxyApi'], {
 			// target: 'https://api.partystar.live',
-			target: 'http://39.105.22.168',
+			target: 'http://localhost:6130',
+			// target: 'http://39.105.22.168',
 			pathRewrite: {
 				'^/proxyApi': '', // 如果后端接口无前缀，可以通过这种方式去掉
 			},
@@ -21,7 +23,8 @@ module.exports = function (app) {
 	app.use(
 		createProxyMiddleware(['/proxyClient'], {
 			// target: 'https://api.partystar.live',
-			target: 'http://39.105.22.168',
+			target: 'http://localhost:6130',
+			// target: 'http://39.105.22.168',
 			pathRewrite: {
 				'^/proxyClient': '',
 			},
@@ -36,7 +39,8 @@ module.exports = function (app) {
 		createProxyMiddleware(['/proxyHelp'], {
 			// target: 'https://help.partystar.live',
 			// target: 'http://ps-help.imee.com',
-			target: 'http://39.105.22.168',
+			target: 'http://localhost:6130',
+			// target: 'http://39.105.22.168',
 			pathRewrite: {
 				'^/proxyHelp': '',
 			},
