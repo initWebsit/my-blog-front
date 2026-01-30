@@ -12,13 +12,24 @@ export default function BlogTitle({
   isLiked,
   tags,
   categoryName,
+  isAdmin = false,
+  handleEdit = () => {},
+  handleDelete = () => {},
   handleLike = () => {},
   handleCategoryClick = () => {},
   handleTagClick = () => {},
 }) {
   return (
     <div className='blog-title-item'>
-      <div className='blog-title-item-title'>{title}</div>
+      <div className='blog-title-item-title'>
+        <div className='blog-title-item-title-text'>{title}</div>
+        {isAdmin && (
+          <div className='blog-title-item-title-operation'>
+            {isAdmin && <button className='blog-title-item-title-operation-button' onClick={handleEdit}>编辑</button>}
+            {isAdmin && <button className='blog-title-item-title-operation-button' onClick={handleDelete}>删除</button>}
+          </div>
+        )}
+        </div>
       <div className='blog-title-item-operation'>
         <svg
           aria-hidden='true'

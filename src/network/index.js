@@ -35,3 +35,9 @@ export const publishBlogComment = params => post('/blog/addComment', params)
 
 // 上传图片
 export const uploadImage = (params, options) => post('/blog/uploadImage', params, options)
+
+// 编辑博客
+export const editBlog = params => post('/blog/updateBlog', params)
+
+// 删除博客
+export const deleteBlog = params => post('/blog/deleteBlog', params)

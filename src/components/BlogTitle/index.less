@@ -8,6 +8,43 @@
     font-size: 20px;
     margin: 0;
     font-weight: 500;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    &-text {
+      flex: 1;
+    }
+
+    &-operation {
+      margin-left: 10px;
+      flex-shrink: 0;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+
+      &-button {
+        font-size: 15px;
+        color: #868686;
+        font-weight: 400;
+        padding: 5px 10px;
+        border-radius: 10px;
+        border: 1px solid rgba(0, 0, 0, 0.15);
+        background-color: #fff;
+        margin-right: 10px;
+        cursor: pointer;
+        -webkit-user-select: none;
+        user-select: none;
+
+        &:hover {
+          border: 1px solid #666;
+        }
+
+        &:last-child {
+          margin-right: 0;
+        }
+      }
+    }
   }
 
   &-operation {

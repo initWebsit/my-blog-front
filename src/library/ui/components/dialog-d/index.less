@@ -80,12 +80,18 @@
 
                 &.@{class-prefix-d-dialog}-btn-ok {
                     font-weight: bold;
-                    border-left: 1px solid var(--border-color);
-                    background-color: #FECC56;
+                    background-color: #1677ff;
                 }
 
-                &:active {
-                    background-color: rgba(0, 0, 0, 0.05);
+                &.@{class-prefix-d-dialog}-btn-cancel {
+                    border: 1px solid var(--border-color);
+                    margin-right: 10px;
+                    background-color: #fff;
+                    color: #000;
+                }
+
+                &:hover {
+                    opacity: 0.8;
                 }
             }
         }

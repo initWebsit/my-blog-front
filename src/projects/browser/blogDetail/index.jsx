@@ -1,10 +1,15 @@
 import React, { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 
 import BlogTitle from '@/components/BlogTitle'
 import Comments from '@/components/Comments'
+import Empty from '@/components/Empty'
+import Loading from '@/components/Loading'
 import PreNextBlog from '@/components/PreNextBlog'
-import { getBlogDetail, likeBlog } from '@/network'
+import Dialog from '@/library/ui/components/dialog-d'
+import Toast from '@/library/ui/components/toast'
+import { deleteBlog, getBlogDetail, likeBlog } from '@/network'
 
 import './index.less'
 
@@ -13,6 +18,7 @@ function BlogDetail() {
   const id = searchParams.get('id')
   const [loading, setLoading] = useState(true)
   const [blogDetail, setBlogDetail] = useState(null)
+  const userInfo = useSelector(state => state.app.userInfo)
   const navigate = useNavigate()
 
   const getBlogDetailFunc = async () => {
@@ -56,42 +62,41 @@ function BlogDetail() {
     navigate(`/blogDetail?id=${blogDetail.nextBlog?.id}`)
   }
 
+  const handleEdit = () => {
+    navigate(`/editBlog?id=${blogDetail.id}`)
+  }
+
+  const handleDelete = () => {
+    Dialog.confirm({
+      cancelText: '取消',
+      okText: '确认',
+      title: '删除博客',
+      content: '确定要删除这篇博客吗？',
+      showCloseIcon: true,
+      onOk: async () => {
+        Toast.loading()
+        const res = await deleteBlog({ id })
+        Toast.clear()
+        if (!res?.data) return
+        Toast.success('删除成功')
+        setTimeout(() => {
+          navigate('/home', { replace: true })
+        }, 1000)
+      },
+    })
+  }
+
   useEffect(() => {
     getBlogDetailFunc()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id])
 
-  if (!blogDetail && loading)
-    return (
-      <div className='blog-detail-loading'>
-        <div className='blog-detail-loading-spinner'></div>
-        <div className='blog-detail-loading-text'>加载中...</div>
-      </div>
-    )
-  if (!blogDetail && !loading)
-    return (
-      <div className='blog-detail-empty'>
-        <svg
-          className='blog-detail-empty-icon'
-          viewBox='0 0 24 24'
-          fill='none'
-          xmlns='http://www.w3.org/2000/svg'
-        >
-          <path
-            d='M9 12h6M9 16h6M17 21H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7l5 5v11a2 2 0 0 1-2 2z'
-            stroke='currentColor'
-            strokeWidth='2'
-            strokeLinecap='round'
-            strokeLinejoin='round'
-          />
-        </svg>
-        <div className='blog-detail-empty-text'>暂无数据</div>
-        <div className='blog-detail-empty-desc'>抱歉，没有找到相关内容</div>
-      </div>
-    )
+  if (loading) return <Loading />
+  if (!blogDetail && !loading) return <Empty />
   return (
     <div className='blog-detail'>
       <BlogTitle
+        isAdmin={blogDetail.create_person === userInfo.id}
         createTime={blogDetail.createTime}
         title={blogDetail.title}
         look_number={blogDetail.look_number}
@@ -103,6 +108,8 @@ function BlogDetail() {
         handleLike={handleLike}
         handleCategoryClick={handleCategoryClick}
         handleTagClick={handleTagClick}
+        handleEdit={handleEdit}
+        handleDelete={handleDelete}
       />
       <div
         className='blog-detail-content'

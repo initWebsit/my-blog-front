@@ -94,6 +94,18 @@ export default [
       h5NavStatus: 0,
     },
   },
+  {
+    title: '编辑博客',
+    platform: ['pc', 'h5'],
+    default: true,
+    path: 'editBlog',
+    component: Loadable(() => import('./editBlog/index')),
+    pageConfig: {
+      pcNavStatus: 0,
+      h5NavStatus: 0,
+      auth: true,
+    },
+  },
   // {
   //     title: 'About Us',
   //     platform: ['pc', 'h5'],
