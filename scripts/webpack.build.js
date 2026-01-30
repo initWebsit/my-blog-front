@@ -5,7 +5,7 @@
  */
 const webpack = require('webpack')
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin')
-const { CleanWebpackPlugin } = require('clean-webpack-plugin')
+// const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const TerserPlugin = require('terser-webpack-plugin')
 const { merge } = require('webpack-merge')
 const path = require('path')
@@ -87,7 +87,7 @@ const genProjectConfig = (project, environment, buildDir) => ({
   },
   plugins: [
     //  打包前删除上一次打包留下的旧代码（根据output.path）
-    new CleanWebpackPlugin(),
+    // new CleanWebpackPlugin(), // 已禁用，使用 output.clean: false
     // 在window环境中注入全局变量
     new webpack.DefinePlugin({
       'process.env.RUN_ENV': JSON.stringify(environment === 'test' ? 'test' : 'production'),
