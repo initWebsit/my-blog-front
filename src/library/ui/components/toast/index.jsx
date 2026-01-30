@@ -1,14 +1,15 @@
-import React, { useEffect, useMemo, useState, useCallback } from 'react';
+import React, { useCallback,useEffect, useMemo, useState } from 'react';
 import ReactDOM from 'react-dom';
-import classNames from 'classnames';
 import { useUpdateEffect } from 'ahooks';
+import classNames from 'classnames';
+
+import { resolveContainer } from '../../utils/get-container';
 import { noop } from '../../utils/noop';
 import Loading from '../loading';
 import Mask from '../mask';
-import { resolveContainer } from '../../utils/get-container';
 
 
-const classPrefix = "b-toast";
+const classPrefix = 'b-toast';
 const toastArray = [];
 
 const InternalToast = (props) => {
@@ -28,14 +29,14 @@ const InternalToast = (props) => {
 
     return (
         <Mask
-            visible={props.visible}
-            destroyOnClose
-            opacity={props.opacity || 0}
-            disableBodyScroll={!maskClickable}
-            getContainer={props.getContainer}
-            afterClose={props.afterClose}
-            style={{ pointerEvents: maskClickable ? 'none' : 'all', ...props.maskStyle }}
-            className={classNames(`${classPrefix}-mask`, props.maskClassName)}
+          visible={props.visible}
+          destroyOnClose
+          opacity={props.opacity || 0}
+          disableBodyScroll={!maskClickable}
+          getContainer={props.getContainer}
+          afterClose={props.afterClose}
+          style={{ pointerEvents: maskClickable ? 'none' : 'all', ...props.maskStyle }}
+          className={classNames(`${classPrefix}-mask`, props.maskClassName)}
         >
             <div style={{ top, backgroundColor: wrapColor }} className={`${classPrefix}-wrap`}>
                 {Boolean(icon) && <div className={`${classPrefix}-icon`}>{icon}</div>}
@@ -117,10 +118,10 @@ function show(props) {
 
         return (
             <InternalToast
-                {...state}
-                getContainer={() => container}
-                visible={visible}
-                afterClose={_afterClose}
+              {...state}
+              getContainer={() => container}
+              visible={visible}
+              afterClose={_afterClose}
             />
         )
     };
@@ -133,7 +134,7 @@ function success(content, props) {
     return show({
         position: 'top',
         content,
-        wrapColor:'rgba(255, 255, 255, 0.95)',
+        wrapColor:'rgba(0, 0, 0, 0.08)',
         ...props
     })
 }
@@ -142,7 +143,7 @@ function error(content, props) {
     return show({
         position: 'top',
         content,
-        wrapColor:'rgba(255, 255, 255, 0.95)',
+        wrapColor:'rgba(0, 0, 0, 0.08)',
         ...props
     })
 }
@@ -151,7 +152,7 @@ function warning(content, props) {
     return show({
         position: 'top',
         content,
-        wrapColor:'rgba(255, 255, 255, 0.95)',
+        wrapColor:'rgba(0, 0, 0, 0.08)',
         ...props
     })
 }

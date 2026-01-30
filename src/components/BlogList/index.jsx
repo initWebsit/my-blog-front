@@ -18,7 +18,7 @@ function BlogList({
       .replace(/&nbsp;/g, ' ')
       .trim()
     // 截断到200字
-    return text.slice(0, 200) + '...'
+    return text.slice(0, 300) + '...'
   }
 
   return (

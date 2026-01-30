@@ -87,6 +87,7 @@ function BlogDetail() {
   }
 
   useEffect(() => {
+    Toast.success('删除成功', { duration: 30000 })
     getBlogDetailFunc()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id])
