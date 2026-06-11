@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import moment from 'moment'
 
-import CommentIcon from '@/assets/comment.png'
+import AvatarIcon from '@/assets/avatar.png'
 import Empty from '@/components/Empty'
 import Loading from '@/components/Loading'
 import { Toast } from '@/library/ui'
@@ -102,7 +102,7 @@ const CommentItem = ({
           className={`comments-list-item-main-img ${
             small ? 'comments-list-item-main-img-small' : ''
           }`}
-          src={CommentIcon}
+          src={item.avatar || AvatarIcon}
         />
         <div className='comments-list-item-main-right'>
           <div className='comments-list-item-main-right-top'>
