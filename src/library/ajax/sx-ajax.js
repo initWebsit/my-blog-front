@@ -6,7 +6,7 @@ import handleError from '@/commons/handleError'
 import store from '@/store'
 import { setUserInfo } from '@/store/app'
 
-const NO_LOGIN_WHITE_LIST = ['/user/getUserInfo']
+const NO_LOGIN_WHITE_LIST = ['/user/getUserInfo', '/blog/uploadImage']
 
 export default class SXAjax {
   /**

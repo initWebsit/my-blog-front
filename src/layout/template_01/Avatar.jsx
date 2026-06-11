@@ -12,7 +12,7 @@ function Avatar() {
     <div className='avatar-content'>
       <div className='avatar-content-avatar'>
         <img
-          src={AvatarIcon}
+          src={userInfo?.avatar || AvatarIcon}
           alt='avatar'
           className='avatar-content-avatar-img'
         />

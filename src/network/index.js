@@ -9,6 +9,9 @@ export const login = params => post('/user/login', params)
 // 注册
 export const register = params => post('/user/register', params)
 
+// 修改用户信息
+export const editInfo = params => post('/user/editInfo', params)
+
 // 获取用户信息
 export const getUserInfo = () => get('/user/getUserInfo', {}, { closeErrorTip: true })
 

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 
 import AvatarIcon from '@/assets/avatar.png'
@@ -7,10 +7,13 @@ import BlogList from '@/components/BlogList'
 import SearchModal from '@/components/SearchModal'
 import { Toast } from '@/library/ui'
 import { getBlogList, getTags } from '@/network'
+import { dealLogout } from '@/store/app'
 
 import './Header.less'
 
 function Header() {
+  const dispatch = useDispatch()
+  const userInfo = useSelector(state => state.app.userInfo)
   const navMenu = useSelector(state => state.app.navMenu)
   const pageCfg = useSelector(state => state.app.pageCfg)
   const [searchModalVisible, setSearchModalVisible] = useState(false)
@@ -19,6 +22,7 @@ function Header() {
   const [searchValue, setSearchValue] = useState('')
   const [blogList, setBlogList] = useState([])
   const [loading, setLoading] = useState(false)
+  const [avatarMenuVisible, setAvatarMenuVisible] = useState(false)
 
   const getTagsFunc = async () => {
     const res = await getTags({ getBlogNum: true })
@@ -91,13 +95,31 @@ function Header() {
             ></path>
           </svg>
         </div>
-        <div className='header-right-avatar'>
+        <div
+          className='header-right-avatar'
+          onMouseEnter={() => setAvatarMenuVisible(true)}
+          onClick={() => setAvatarMenuVisible(true)}
+        >
           <img
-            src={AvatarIcon}
+            src={userInfo?.avatar || AvatarIcon}
             alt='avatar'
             className='header-right-avatar-img'
           />
         </div>
+        {avatarMenuVisible && (
+          <section
+            className='header-right-avatar-menu'
+            onMouseLeave={() => setAvatarMenuVisible(false)}
+            onClick={() => setAvatarMenuVisible(false)}
+          >
+            <div className='header-right-avatar-menu-item' onClick={() => navigate('/editUser')}>
+              修改用户信息
+            </div>
+            <div className='header-right-avatar-menu-item' onClick={() => dispatch(dealLogout())}>
+              退出登录
+            </div>
+          </section>
+        )}
       </div>
 
       <SearchModal

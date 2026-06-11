@@ -65,7 +65,7 @@ export const dealLogout = createAsyncThunk(
   async (_, { dispatch, rejectWithValue }) => {
     Toast.loading()
     try {
-      const res = await ajax.post('/h5user/logout')
+      const res = await ajax.post('/user/logout')
       if (!res.success) throw res
       Toast.clear()
       return res
@@ -75,6 +75,7 @@ export const dealLogout = createAsyncThunk(
     } finally {
       dispatch(setUserInfo({}))
       clearAllCookie()
+      dispatch(jumpLoginPage())
     }
   }
 )

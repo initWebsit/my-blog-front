@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 
 import { Toast } from '@/library/ui'
-import { login, register, sendCode } from '@/network'
+import { login, register, sendCode, uploadImage } from '@/network'
 import { setUserInfo } from '@/store/app'
 
 import './index.less'
@@ -212,6 +212,7 @@ function Auth() {
   // 注册表单
   const [registerForm, setRegisterForm] = useState({
     nickname: '',
+    avatar: '',
     email: '',
     password: '',
     confirmPassword: '',
@@ -328,6 +329,10 @@ function Auth() {
       newErrors.nickname = '请输入昵称'
     }
 
+    if (!registerForm.avatar) {
+      newErrors.avatar = '请上传头像'
+    }
+
     if (!registerForm.email) {
       newErrors.email = '请输入邮箱'
     } else {
@@ -390,6 +395,26 @@ function Auth() {
     setRegisterForm({ ...registerForm, [field]: value })
     if (errors[field]) {
       setErrors({ ...errors, [field]: '' })
+    }
+  }
+
+  const onUploadImage = async file => {
+    const formData = new FormData()
+    formData.append('file', file)
+    const res = await uploadImage(formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    })
+    return res?.data?.url
+  }
+
+  const handleAvatarChange = async e => {
+    const file = e.target.files[0]
+    if (file) {
+      let url = await onUploadImage(file)
+      if (!url) return
+      setRegisterForm({ ...registerForm, avatar: url })
     }
   }
 
@@ -470,6 +495,43 @@ function Auth() {
                   onChange={e => updateRegisterForm('nickname', e.target.value)}
                 />
                 {errors.nickname && <div className='form-error'>{errors.nickname}</div>}
+              </div>
+
+              <div className='form-group'>
+                <label className='form-label'>头像</label>
+                <div className='form-avatar'>
+                  {registerForm.avatar ? (
+                    <div className='form-avatar-upload-preview'>
+                      <img
+                        className='form-avatar-upload-preview-img'
+                        src={registerForm.avatar}
+                        alt='头像'
+                      />
+                      <span
+                        className='form-avatar-upload-preview-icon'
+                        onClick={() => updateRegisterForm('avatar', '')}
+                      >
+                        X
+                      </span>
+                    </div>
+                  ) : (
+                    <div className='form-avatar-upload'>
+                      <input
+                        id='avatar'
+                        className='form-avatar-input'
+                        type='file'
+                        accept='image/*'
+                        onChange={handleAvatarChange}
+                      />
+                      <div
+                        className='form-avatar-upload-icon'
+                        onClick={() => document.getElementById('avatar').click()}
+                      >
+                        <span>点击上传头像</span>
+                      </div>
+                    </div>
+                  )}
+                </div>
               </div>
 
               <div className='form-group'>

@@ -106,6 +106,18 @@ export default [
       auth: true,
     },
   },
+  {
+    title: '修改个人信息',
+    platform: ['pc', 'h5'],
+    default: true,
+    path: 'editUser',
+    component: Loadable(() => import('./editInfo/index')),
+    pageConfig: {
+      pcNavStatus: 0,
+      h5NavStatus: 0,
+      auth: true,
+    },
+  },
   // {
   //     title: 'About Us',
   //     platform: ['pc', 'h5'],
