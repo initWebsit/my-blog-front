@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { PhotoSlider } from 'react-photo-view'
 import { useSelector } from 'react-redux'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 
@@ -11,6 +12,7 @@ import Dialog from '@/library/ui/components/dialog-d'
 import Toast from '@/library/ui/components/toast'
 import { deleteBlog, getBlogDetail, likeBlog } from '@/network'
 
+import 'react-photo-view/dist/react-photo-view.css'
 import './index.less'
 
 function BlogDetail() {
@@ -18,6 +20,9 @@ function BlogDetail() {
   const id = searchParams.get('id')
   const [loading, setLoading] = useState(true)
   const [blogDetail, setBlogDetail] = useState(null)
+  const [images, setImages] = useState([])
+  const [visible, setVisible] = useState(false)
+  const [currentIndex, setCurrentIndex] = useState(0)
   const userInfo = useSelector(state => state.app.userInfo)
   const navigate = useNavigate()
 
@@ -33,6 +38,14 @@ function BlogDetail() {
     setBlogDetail(res.data)
     setTimeout(() => {
       document.getElementsByClassName('layout-d-frame-main-content')[0].scrollTop = 0
+
+      // 设置图片预览
+      const images = document.querySelectorAll('.blog-detail-content img')
+      const arr = []
+      images.forEach(img => {
+        arr.push({ src: img.src, key: Math.random() })
+      })
+      setImages(arr)
     }, 100)
   }
 
@@ -86,10 +99,24 @@ function BlogDetail() {
     })
   }
 
+  const imageClickFunc = (e) => {
+    if (e.target?.tagName !== 'IMG') return
+    setVisible(true)
+    setCurrentIndex(images.findIndex(temp => temp.src === e.target.src))
+  }
+
   useEffect(() => {
     getBlogDetailFunc()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id])
+
+  useEffect(() => {
+    document.getElementsByClassName('blog-detail-content')?.[0]?.addEventListener('click', imageClickFunc)
+
+    return () => {
+      document.getElementsByClassName('blog-detail-content')?.[0]?.removeEventListener('click', imageClickFunc)
+    }
+  }, [images])
 
   if (loading) return <Loading />
   if (!blogDetail && !loading) return <Empty />
@@ -123,6 +150,13 @@ function BlogDetail() {
         onNext={handleNext}
       />
       <Comments blogId={id} blogCreateUserId={blogDetail.create_person} />
+      <PhotoSlider
+        images={images.map((item) => ({ src: item.src, key: item.key }))}
+        visible={visible}
+        index={currentIndex}
+        onClose={() => setVisible(false)}
+        onIndexChange={setCurrentIndex} // 切换图片时同步更新索引
+      />
     </div>
   )
 }
