@@ -36,16 +36,17 @@ function BlogDetail() {
     setLoading(false)
     if (!res?.data) return
     setBlogDetail(res.data)
+
+    // 通过正则匹配截取出富文本中多个图片链接
+    const htmlStr = res.data?.content
+    const pattern = /<img\s+[^>]*src\s*=\s*(['"]?)(.*?)\1/gi
+    const imagesArr = [...htmlStr.matchAll(pattern)]
+      .map(temp => temp?.[2]?.trim())
+      .filter(item => item)
+    setImages(imagesArr.map(item => ({ src: item, key: Math.random() })))
+
     setTimeout(() => {
       document.getElementsByClassName('layout-d-frame-main-content')[0].scrollTop = 0
-
-      // 设置图片预览
-      const images = document.querySelectorAll('.blog-detail-content img')
-      const arr = []
-      images.forEach(img => {
-        arr.push({ src: img.src, key: Math.random() })
-      })
-      setImages(arr)
     }, 100)
   }
 
@@ -99,7 +100,7 @@ function BlogDetail() {
     })
   }
 
-  const imageClickFunc = (e) => {
+  const imageClickFunc = e => {
     if (e.target?.tagName !== 'IMG') return
     setVisible(true)
     setCurrentIndex(images.findIndex(temp => temp.src === e.target.src))
@@ -111,11 +112,16 @@ function BlogDetail() {
   }, [id])
 
   useEffect(() => {
-    document.getElementsByClassName('blog-detail-content')?.[0]?.addEventListener('click', imageClickFunc)
+    document
+      .getElementsByClassName('blog-detail-content')?.[0]
+      ?.addEventListener('click', imageClickFunc)
 
     return () => {
-      document.getElementsByClassName('blog-detail-content')?.[0]?.removeEventListener('click', imageClickFunc)
+      document
+        .getElementsByClassName('blog-detail-content')?.[0]
+        ?.removeEventListener('click', imageClickFunc)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [images])
 
   if (loading) return <Loading />
@@ -151,7 +157,7 @@ function BlogDetail() {
       />
       <Comments blogId={id} blogCreateUserId={blogDetail.create_person} />
       <PhotoSlider
-        images={images.map((item) => ({ src: item.src, key: item.key }))}
+        images={images.map(item => ({ src: item.src, key: item.key }))}
         visible={visible}
         index={currentIndex}
         onClose={() => setVisible(false)}
