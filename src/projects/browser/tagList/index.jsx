@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 
+import AnimatedList from '@/components/AnimatedList'
 import BlogList from '@/components/BlogList'
 import Empty from '@/components/Empty'
 import Loading from '@/components/Loading'
@@ -57,21 +58,24 @@ function TagList() {
         title={`${categoryName ? `分类：${categoryName}` : '标签：' + tagName}`}
         number={pageInfo.total}
       />
-      {blogList.map((item, index) => (
-        <BlogList
-          key={index}
-          item={item}
-          handleClick={() => navigate(`/blogDetail?id=${item.id}`)}
-          handleCategoryClick={() =>
-            navigate(`/tagList?categoryId=${item.category}&categoryName=${item.category_name}`, {
-              replace: true,
-            })
-          }
-          handleTagClick={(tagIdTemp, tagNameTemp) =>
-            navigate(`/tagList?tagId=${tagIdTemp}&tagName=${tagNameTemp}`, { replace: true })
-          }
-        />
-      ))}
+      <AnimatedList
+        items={blogList}
+        renderItem={(item, index) => (
+          <BlogList
+            key={index}
+            item={item}
+            handleClick={() => navigate(`/blogDetail?id=${item.id}`)}
+            handleCategoryClick={() =>
+              navigate(`/tagList?categoryId=${item.category}&categoryName=${item.category_name}`, {
+                replace: true,
+              })
+            }
+            handleTagClick={(tagIdTemp, tagNameTemp) =>
+              navigate(`/tagList?tagId=${tagIdTemp}&tagName=${tagNameTemp}`, { replace: true })
+            }
+          />
+        )}
+      />
       <NextPage
         index={pageInfo.page}
         total={Math.ceil(pageInfo.total / pageInfo.pageSize)}

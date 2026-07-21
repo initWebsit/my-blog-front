@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 
 import AvatarIcon from '@/assets/avatar.png'
+import AnimatedList from '@/components/AnimatedList'
 import BlogList from '@/components/BlogList'
 import SearchModal from '@/components/SearchModal'
 import { Toast } from '@/library/ui'
@@ -129,25 +130,31 @@ function Header() {
         onSearch={handleSearch}
         onTagClick={handleTagClick}
       >
-        <div className='header-right-search-modal-content'>
-          {blogList.map((item, index) => (
-            <BlogList
-              key={index}
-              item={item}
-              handleClick={() => {
-                setSearchModalVisible(false)
-                navigate(`/blogDetail?id=${item.id}`)
-              }}
-              handleCategoryClick={() => {
-                setSearchModalVisible(false)
-                navigate(`/tagList?categoryId=${item.category}&categoryName=${item.category_name}`)
-              }}
-              handleTagClick={(tagIdTemp, tagNameTemp) => {
-                setSearchModalVisible(false)
-                navigate(`/tagList?tagId=${tagIdTemp}&tagName=${tagNameTemp}`)
-              }}
-            />
-          ))}
+        <div id='header-right-search-modal-content' className='header-right-search-modal-content'>
+          <AnimatedList
+            items={blogList}
+            rootDomId='header-right-search-modal-content'
+            renderItem={(item, index) => (
+              <BlogList
+                key={index}
+                item={item}
+                handleClick={() => {
+                  setSearchModalVisible(false)
+                  navigate(`/blogDetail?id=${item.id}`)
+                }}
+                handleCategoryClick={() => {
+                  setSearchModalVisible(false)
+                  navigate(
+                    `/tagList?categoryId=${item.category}&categoryName=${item.category_name}`
+                  )
+                }}
+                handleTagClick={(tagIdTemp, tagNameTemp) => {
+                  setSearchModalVisible(false)
+                  navigate(`/tagList?tagId=${tagIdTemp}&tagName=${tagNameTemp}`)
+                }}
+              />
+            )}
+          />
         </div>
       </SearchModal>
     </div>

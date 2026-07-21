@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
+import AnimatedList from '@/components/AnimatedList'
 import BlogList from '@/components/BlogList'
 import Empty from '@/components/Empty'
 import Loading from '@/components/Loading'
@@ -48,19 +49,22 @@ function Blog() {
   return (
     <section className='blog-container'>
       <NavTop title='分类：博客' number={pageInfo.total} />
-      {blogList.map((item, index) => (
-        <BlogList
-          key={index}
-          item={item}
-          handleClick={() => navigate(`/blogDetail?id=${item.id}`)}
-          handleCategoryClick={() =>
-            navigate(`/tagList?categoryId=${item.category}&categoryName=${item.category_name}`)
-          }
-          handleTagClick={(tagId, tagName) =>
-            navigate(`/tagList?tagId=${tagId}&tagName=${tagName}`)
-          }
-        />
-      ))}
+      <AnimatedList
+        items={blogList}
+        renderItem={(item, index) => (
+          <BlogList
+            key={index}
+            item={item}
+            handleClick={() => navigate(`/blogDetail?id=${item.id}`)}
+            handleCategoryClick={() =>
+              navigate(`/tagList?categoryId=${item.category}&categoryName=${item.category_name}`)
+            }
+            handleTagClick={(tagId, tagName) =>
+              navigate(`/tagList?tagId=${tagId}&tagName=${tagName}`)
+            }
+          />
+        )}
+      />
       <NextPage
         index={pageInfo.page}
         total={Math.ceil(pageInfo.total / pageInfo.pageSize)}

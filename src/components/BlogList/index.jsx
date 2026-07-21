@@ -1,6 +1,8 @@
 import React from 'react'
 import moment from 'moment'
 
+import Platform from '@/commons/platform'
+
 import './index.less'
 
 function BlogList({
@@ -21,12 +23,20 @@ function BlogList({
     return text.slice(0, 300) + '...'
   }
 
+  const contentClick = () => {
+    if (Platform.is.mobile) {
+      handleClick()
+    }
+  }
+
   return (
     <div className='blog-list-item'>
       <div className='blog-list-item-title' onClick={handleClick}>
         {item.title}
       </div>
-      <div className='blog-list-item-desc'>{getPlainText(item.content)}</div>
+      <div className='blog-list-item-desc' onClick={contentClick}>
+        {getPlainText(item.content)}
+      </div>
       <div className='blog-list-item-operation'>
         <svg
           aria-hidden='true'

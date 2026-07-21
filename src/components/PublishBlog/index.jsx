@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import Loading from '@/components/Loading'
 import RichEditor from '@/components/Richeditor'
 import { Picker, Toast } from '@/library/ui'
-import { editBlog, getBlogDetail,getTags, publishBlog, uploadImage } from '@/network'
+import { editBlog, getBlogDetail, getTags, publishBlog, uploadImage } from '@/network'
 
 import './index.less'
 
@@ -77,7 +77,7 @@ function Publish({ isEdit = false, blogId = null }) {
     }, 1000)
   }
 
-  const onUploadImage = async (file) => {
+  const onUploadImage = async file => {
     const formData = new FormData()
     formData.append('file', file)
     const res = await uploadImage(formData, {
@@ -108,7 +108,7 @@ function Publish({ isEdit = false, blogId = null }) {
     if (isEdit && blogId) {
       getBlogDetailFunc()
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   if (isEdit && loading) return <Loading />
@@ -178,11 +178,7 @@ function Publish({ isEdit = false, blogId = null }) {
         {/* 富文本编辑器 */}
         <div className='form-group'>
           <label className='form-label'>内容</label>
-          <RichEditor 
-            ref={editorRef}  
-            content={content} 
-            onUploadImage={onUploadImage}
-          />
+          <RichEditor ref={editorRef} content={content} onUploadImage={onUploadImage} />
         </div>
 
         {/* 确认按钮 */}
