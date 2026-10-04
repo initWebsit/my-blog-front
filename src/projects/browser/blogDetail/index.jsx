@@ -51,6 +51,13 @@ function BlogDetail() {
   }
 
   const handleLike = async () => {
+    if (!userInfo?.id) {
+      Toast.error('请先登陆，即将跳转至登陆页...')
+      setTimeout(() => {
+        navigate('/login?redirect_url=' + encodeURIComponent(window.location.href))
+      }, 1000)
+      return
+    }
     const res = await likeBlog({ id, isLiked: blogDetail.isLiked ? 0 : 1 })
     if (!res?.data) return
     setBlogDetail(state => ({
